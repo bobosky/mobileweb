@@ -1,0 +1,166 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>中文电视大全</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />  
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <link rel="stylesheet" href="/static/styles.css"/>
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css"/>
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
+</head>
+
+<body>
+
+<div id="videoListPage" data-role="page" data-add-back-btn="true">
+
+    <div data-role="header" data-position="fixed">
+        <h1>中文电视大全</h1>
+    </div>
+
+    <div data-inline="true">
+        <form action="http://www.allchinesetv.com/mobile.html" method="get" data-ajax="false">
+            <input type="search" name="q" data-inline="true" placeholder="拼音或汉字搜索"> <input type="submit" value="Search"
+                                                                     data-inline="true">
+        </form>
+    </div>
+    <div data-role="content">
+        <ul id="videoList" data-role="listview" data-filter="true">
+          
+        </ul>
+    </div>
+
+</div>
+
+
+<script type="text/javascript">
+    var serviceURL = 'http://www.allchinesetv.com';
+    var videos;
+
+    //$('#videoListPage').on('pageshow', function (event) {
+	$(document).on("pageinit", '#videoListPage',function (event) {
+        getvideoList();
+    });
+
+    $(document).on("click", '.load-more',function (event) {
+
+        var allstr = decodeURIComponent($('.load-more').attr('id'));
+        var str = allstr.substring(3, allstr.length);
+
+        url = serviceURL + '/' + str;
+        $.getJSON(url, function (data) {
+            var $loadMore = $('#videoList').children('.load-more');
+            $loadMore.remove()
+            videos = data;
+            $.each(videos, function (index, video) {
+                if (video.type == 1) {
+                    $('#videoList').append('<li><a data-ajax="false" href="/mobile.html?id=' + video.id + '">' +
+                            '<img src="' + video.image + '"/>' +
+                            '<h4>' + video.title + '</h4>' +
+                            '<p>' + video.age + '</p>' + ' </a></li> ');
+                }
+                if (video.type == 2) {
+                    if (video.valid == 1) {
+                        $('#videoList').append('<li class="load-more" id="' + video.link + '"><a href="#">Load More</a></li>');
+                    }
+                }
+            });
+
+            $('#videoList').listview('refresh');
+        });
+
+    });
+    function getvideoList() {
+        var id = getUrlVars()["id"];
+        var cat = getUrlVars()["cat"];
+        var q = getUrlVars()["q"];
+		//alert(cat)
+
+        var url = ''
+        if (typeof cat != 'undefined') {
+            url = serviceURL + '/' + cat + '/?alt=json';
+            $.getJSON(url, function (data) {
+                var $loadMore = $('#videoList').children('.load-more');
+                $loadMore.remove()
+               
+                videos = data;
+                $.each(videos, function (index, video) {
+                    if (video.type == 1) {
+                        $('#videoList').append('<li><a data-ajax="false" href="/mobile.html?id=' + video.id + '">' +
+                                '<img src="' + video.image + '"/>' +
+                                '<h4>' + video.title + '</h4>' +
+                                '<p>' + video.age + '</p>' + ' </a></li> ');
+                    }
+                    if (video.type == 2) {
+                        if (video.valid == 1) {
+                            $('#videoList').append('<li class="load-more" id="' + video.link + '"><a href="#">Load More</a></li>');
+                        }
+                    }
+                });
+               
+                $('#videoList').listview('refresh');
+            });
+        }
+        else if (typeof id != 'undefined') {
+            url = serviceURL + '/play/' + id + '/?alt=json';
+            $.getJSON(url, function (data) {
+                $('#videoList li').remove();
+                videos = data;
+                $.each(videos, function (index, video) {
+                    $('#videoList').append('<li><a data-ajax="false" href="/mobileplay.html?video=' + video.ytlink + '">' +
+                            '<img src="' + video.image + '"/>' +
+                            '<h4>' + video.title + '</h4>' +
+                            '<p>' + video.title + '</p>' + ' </a></li> ');
+                });
+                $('#videoList').listview('refresh');
+            });
+
+        }
+        else if (typeof q != 'undefined') {
+            url = serviceURL + '/search/?q=' + q + '&alt=json';
+         
+            $.getJSON(url, function (data) {
+                $('#videoList li').remove();
+                videos = data;
+                $.each(videos, function (index, video) {
+
+                    if (video.type == 1) {
+                        $('#videoList').append('<li><a data-ajax="false" href="/mobile.html?id=' + video.id + '">' +
+                                '<img src="' + video.image + '"/>' +
+                                '<h4>' + video.title + '</h4>' +
+                                '<p>' + video.title + '</p>' + ' </a></li> ');
+                    }
+
+                });
+             
+                $('#videoList').listview('refresh');
+            });
+
+        }
+        else {
+            $('#videoList li').remove();
+            $('#videoList').append('<li><a data-ajax="false" href="/mobile.html?cat=tv' + '">' + '<h4>电视剧</h4>' + ' </a></li> ');
+            $('#videoList').append('<li><a data-ajax="false" href="/mobile.html?cat=movie' + '">' + '<h4>电影</h4>' + ' </a></li> ');
+            $('#videoList').append('<li><a data-ajax="false" href="/mobile.html?cat=zongyi' + '">' + '<h4>综艺</h4>' + ' </a></li> ');
+            $('#videoList').append('<li><a data-ajax="false" href="/mobile.html?cat=tiyu' + '">' + '<h4>体育</h4>' + ' </a></li> ');
+            $('#videoList').append('<li><a data-ajax="false" href="/mobile.html?cat=xinwen' + '">' + '<h4>新闻</h4>' + ' </a></li> ');
+            $('#videoList').append('<li><a data-ajax="false" href="/mobile.html?cat=katong' + '">' + '<h4>卡通</h4>' + ' </a></li> ');
+            $('#videoList').listview('refresh');
+        }
+
+    }
+
+    function getUrlVars() {
+        var vars = [], hash;
+        var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+        for (var i = 0; i < hashes.length; i++) {
+            hash = hashes[i].split('=');
+            vars.push(hash[0]);
+            vars[hash[0]] = hash[1];
+        }
+        return vars;
+    }
+</script>
+
+</body>
+</html>
