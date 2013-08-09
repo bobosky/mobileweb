@@ -54,7 +54,7 @@
             videos = data;
             $.each(videos, function (index, video) {
                 if (video.type == 1) {
-                    $('#videoList').append('<li><a data-ajax="false" href="http://www.allchinesetv.com/index.html?id=' + video.id + '">' +
+                    $('#videoList').append('<li><a data-ajax="false" href="/index.html?id=' + video.id + '">' +
                             '<img src="' + video.image + '"/>' +
                             '<h4>' + video.title + '</h4>' +
                             '<p>' + video.age + '</p>' + ' </a></li> ');
@@ -86,7 +86,7 @@
                 videos = data;
                 $.each(videos, function (index, video) {
                     if (video.type == 1) {
-                        $('#videoList').append('<li><a data-ajax="false" href="http://www.allchinesetv.com/index.html?id=' + video.id + '">' +
+                        $('#videoList').append('<li><a data-ajax="false" href="/index.html?id=' + video.id + '">' +
                                 '<img src="' + video.image + '"/>' +
                                 '<h4>' + video.title + '</h4>' +
                                 '<p>' + video.age + '</p>' + ' </a></li> ');
@@ -107,7 +107,7 @@
                 $('#videoList li').remove();
                 videos = data;
                 $.each(videos, function (index, video) {
-                    $('#videoList').append('<li><a data-ajax="false" href="http://www.allchinesetv.com/mobileplay.html?video=' + video.ytlink + '">' +
+                    $('#videoList').append('<li><a data-ajax="false" href="/mobileplay.html?video=' + video.ytlink + '">' +
                             '<img src="' + video.image + '"/>' +
                             '<h4>' + video.title + '</h4>' +
                             '<p>' + video.title + '</p>' + ' </a></li> ');
@@ -125,7 +125,7 @@
                 $.each(videos, function (index, video) {
 
                     if (video.type == 1) {
-                        $('#videoList').append('<li><a data-ajax="false" href="http://www.allchinesetv.com/index.html?id=' + video.id + '">' +
+                        $('#videoList').append('<li><a data-ajax="false" href="/index.html?id=' + video.id + '">' +
                                 '<img src="' + video.image + '"/>' +
                                 '<h4>' + video.title + '</h4>' +
                                 '<p>' + video.title + '</p>' + ' </a></li> ');
@@ -139,12 +139,12 @@
         }
         else {
             $('#videoList li').remove();
-            $('#videoList').append('<li><a data-ajax="false" href="http://www.allchinesetv.com/index.html?cat=tv' + '">' + '<h4>电视剧</h4>' + ' </a></li> ');
-            $('#videoList').append('<li><a data-ajax="false" href="http://www.allchinesetv.com/index.html?cat=movie' + '">' + '<h4>电影</h4>' + ' </a></li> ');
-            $('#videoList').append('<li><a data-ajax="false" href="http://www.allchinesetv.com/index.html?cat=zongyi' + '">' + '<h4>综艺</h4>' + ' </a></li> ');
-            $('#videoList').append('<li><a data-ajax="false" href="http://www.allchinesetv.com/index.html?cat=tiyu' + '">' + '<h4>体育</h4>' + ' </a></li> ');
-            $('#videoList').append('<li><a data-ajax="false" href="http://www.allchinesetv.com/index.html?cat=xinwen' + '">' + '<h4>新闻</h4>' + ' </a></li> ');
-            $('#videoList').append('<li><a data-ajax="false" href="http://www.allchinesetv.com/index.html?cat=katong' + '">' + '<h4>卡通</h4>' + ' </a></li> ');
+            $('#videoList').append('<li><a data-ajax="false" href="/index.html?cat=tv' + '">' + '<h4>电视剧</h4>' + ' </a></li> ');
+            $('#videoList').append('<li><a data-ajax="false" href="/index.html?cat=movie' + '">' + '<h4>电影</h4>' + ' </a></li> ');
+            $('#videoList').append('<li><a data-ajax="false" href="/index.html?cat=zongyi' + '">' + '<h4>综艺</h4>' + ' </a></li> ');
+            $('#videoList').append('<li><a data-ajax="false" href="/index.html?cat=tiyu' + '">' + '<h4>体育</h4>' + ' </a></li> ');
+            $('#videoList').append('<li><a data-ajax="false" href="/index.html?cat=xinwen' + '">' + '<h4>新闻</h4>' + ' </a></li> ');
+            $('#videoList').append('<li><a data-ajax="false" href="/index.html?cat=katong' + '">' + '<h4>卡通</h4>' + ' </a></li> ');
             $('#videoList').listview('refresh');
         }
 
